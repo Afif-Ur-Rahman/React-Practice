@@ -1,29 +1,27 @@
-import Home from "./components/Home/Home";
-import Contact from "./components/Contact/Contact";
-import About from "./components/About/About";
-import Route from "./Route";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import MainRoute from "./Route";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import { Home, Contact, About, NotFound } from "./components";
 import "./App.css";
 
 function App() {
-  const router = createBrowserRouter([{
-    path: "/",
-    element: <Route />,
-    children: [{
-      path: "",
-      element: <Home />
-    }, {
-      path: "about",
-      element: <About />
-    }, {
-      path: "contact",
-      element: <Contact />
-    }
-  ]
-  }])
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<MainRoute />}>
+        <Route path="" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path = "*" element={<NotFound />} />
+      </Route>
+    )
+  );
   return (
     <>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </>
   );
 }
